@@ -1,0 +1,12 @@
+[
+    {
+      "targets": [ 
+        "cassandra-seed:9103",
+        "cassandra-nood1:9103",
+        "cassandra-nood2:9103"  
+    ],
+      "labels": {
+        
+      }
+    }
+  ]
