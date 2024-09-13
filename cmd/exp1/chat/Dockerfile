@@ -2,8 +2,9 @@ FROM golang:alpine3.19 as builder
 
 WORKDIR /app
 
-COPY go.work ./
+COPY go.work go.work.sum ./
 COPY ./cmd ./cmd
+COPY ./config ./config
 
 # for the chat service 
 RUN GOOS=linux go build -o exp1/chat ./cmd/exp1/chat/main.go
