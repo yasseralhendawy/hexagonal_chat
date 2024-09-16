@@ -1,0 +1,16 @@
+cassandra:
+  username: admin
+  password: admin
+  keySpace: user
+  hosts:
+    -  http://cassandra-seed:9042
+    -  http://cassandra-nood1:9142
+    -  http://cassandra-nood2:9242
+jwt:
+  secret: secret
+  issuer: hex_chat
+  Audience:
+    - web
+    - mobile
+  expireInHours: 24
+  LeewayInSecond: 5

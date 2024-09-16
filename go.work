@@ -3,7 +3,9 @@ go 1.22.1
 use (
 	./cmd/exp1/auth
 	./cmd/exp1/chat
+	./config
 	./domain/auth
 	./domain/chat
 	./domain/user
+	./pkg/claims
 )
