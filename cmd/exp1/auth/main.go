@@ -1,16 +1,17 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/yasseralhendawy/hexagonal_chat/config"
+	"github.com/yasseralhendawy/hexagonal_chat/pkg/logger/logger"
+	zaplogger "github.com/yasseralhendawy/hexagonal_chat/pkg/logger/zap_logger"
 )
 
 func main() {
 	//lets get the configrations for now just check the error
-	_, err := config.GetConfig("/exp1")
+	cfg, err := config.GetConfig("/exp1")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Hello world from auth")
+	lg := zaplogger.CreateLogger(&cfg.Log)
+	lg.Info(logger.General, "Hello world from auth", nil)
 }

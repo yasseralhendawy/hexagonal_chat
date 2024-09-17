@@ -11,6 +11,7 @@ import (
 type Config struct {
 	Jwt       JWT
 	Cassandra CassandraDB
+	Log       Logger
 }
 
 type JWT struct {
@@ -26,6 +27,11 @@ type CassandraDB struct {
 	Password string
 	KeySpace string
 	Hosts    []string
+}
+
+type Logger struct {
+	FilePath string
+	Level    int
 }
 
 // the path from the parent folder exp1 as an example

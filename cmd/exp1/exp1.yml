@@ -14,3 +14,6 @@ jwt:
     - mobile
   expireInHours: 24
   LeewayInSecond: 5
+log:
+  filePath: ../logs/exp1
+  level: -1
