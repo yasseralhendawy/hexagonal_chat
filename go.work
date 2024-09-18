@@ -8,6 +8,8 @@ use (
 	./domain/chat
 	./domain/user
 	./pkg/claims
-	./pkg/logger/zap_logger
 	./pkg/logger/adapter
+	./pkg/logger/zap_logger
+	./pkg/metrics/adapter
+	./pkg/metrics/prometheus
 )

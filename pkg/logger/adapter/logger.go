@@ -3,7 +3,8 @@ package logger
 type LoggerFrom string
 
 const (
-	General LoggerFrom = "general"
+	General    LoggerFrom = "general"
+	AppMetrics LoggerFrom = "AppMetrics"
 )
 
 type Logger interface {
