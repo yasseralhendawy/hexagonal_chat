@@ -7,9 +7,12 @@ use (
 	./domain/auth
 	./domain/chat
 	./domain/user
+	./internal/application/auth
+	./internal/presentation/gin_handlers
 	./pkg/claims
 	./pkg/logger/adapter
 	./pkg/logger/zap_logger
 	./pkg/metrics/adapter
 	./pkg/metrics/prometheus
+	./pkg/servers/gin_server
 )

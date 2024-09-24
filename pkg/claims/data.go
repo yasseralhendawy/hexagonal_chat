@@ -10,7 +10,7 @@ type ClaimsData struct {
 	Email  string `json:"email"`
 }
 
-func NewClaimsData(user auth.User) *ClaimsData {
+func NewClaimsData(user *auth.User) *ClaimsData {
 	return &ClaimsData{
 		UserID: user.UserId,
 		Email:  user.Email,

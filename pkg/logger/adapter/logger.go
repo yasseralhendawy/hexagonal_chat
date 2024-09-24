@@ -4,7 +4,8 @@ type LoggerFrom string
 
 const (
 	General    LoggerFrom = "general"
-	AppMetrics LoggerFrom = "AppMetrics"
+	AppMetrics LoggerFrom = "app-metrics"
+	GinServer  LoggerFrom = "gin-server"
 )
 
 type Logger interface {

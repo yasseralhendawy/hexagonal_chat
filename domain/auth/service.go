@@ -9,12 +9,18 @@ type IAuthRepo interface {
 }
 
 type Service struct {
-	Storage IAuthRepo
+	storage IAuthRepo
+}
+
+func New(storage IAuthRepo) *Service {
+	return &Service{
+		storage: storage,
+	}
 }
 
 func (s *Service) GetUser(email string, password string) (*User, error) {
 	//get the user from the database
-	user, err := s.Storage.GetUser(email)
+	user, err := s.storage.GetUser(email)
 	if err != nil {
 		return nil, err
 	}
@@ -32,7 +38,7 @@ func (s *Service) CreateNewUser(email string, password string) (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-	err = s.Storage.CreateNewUser(user)
+	err = s.storage.CreateNewUser(user)
 	if err != nil {
 		return nil, err
 	}
