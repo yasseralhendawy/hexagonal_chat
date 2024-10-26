@@ -11,7 +11,7 @@ type App struct {
 }
 
 func (app *App) Login(req *LoginRequest) (interface{}, error) {
-	u, err := app.DomainService.GetUser(req.Username, req.Password)
+	u, err := app.DomainService.GetUser(req.Email, req.Password)
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +23,7 @@ func (app *App) Login(req *LoginRequest) (interface{}, error) {
 }
 
 func (app *App) Register(req *RegisterRequest) (interface{}, error) {
-	u, err := app.DomainService.CreateNewUser(req.Username, req.Password)
+	u, err := app.DomainService.CreateNewUser(req.Email, req.Password)
 	if err != nil {
 		return nil, err
 	}

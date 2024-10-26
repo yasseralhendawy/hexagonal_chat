@@ -16,21 +16,24 @@ services:
     networks:
         - hex_chat_network
     restart: unless-stopped
+    depends_on:
+      cassandra-seed:
+        condition: service_healthy
     volumes:
       - logs:/logs
-  chat:
-    image: chat-service
-    build:
-      context: ../../
-      dockerfile: cmd/exp1/chat/Dockerfile
-    container_name: chat
-    ports:
-      - "8082:8082"
-    networks:
-        - hex_chat_network
-    restart: unless-stopped
-    volumes:
-      - logs:/logs
+  # chat:
+  #   image: chat-service
+  #   build:
+  #     context: ../../
+  #     dockerfile: cmd/exp1/chat/Dockerfile
+  #   container_name: chat
+  #   ports:
+  #     - "8082:8082"
+  #   networks:
+  #       - hex_chat_network
+  #   restart: unless-stopped
+  #   volumes:
+  #     - logs:/logs
   # 
   # Database configuration :
   # 1- set some environment variable for the basic configrations 

@@ -1,10 +1,14 @@
 package auth
 
 import (
-	"errors"
-
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
+)
+
+type LoginMethod string
+
+const (
+	Email = "email"
 )
 
 type User struct {
@@ -15,6 +19,7 @@ type User struct {
 	MobileNumber string
 	Email        string
 	HashPassword string
+	LoginMethod  []LoginMethod
 }
 
 type UserOpt func(*User)
@@ -26,27 +31,24 @@ func NewUser(email string, password string, options ...UserOpt) (*User, error) {
 	}
 	user := &User{
 		UserId:       uuid.New().String(),
-		Username:     email,
+		Email:        email,
+		LoginMethod:  []LoginMethod{Email},
 		HashPassword: string(hash),
 	}
-
-	user, err = user.EditUser(options...)
-	if err != nil {
-		return nil, err
-	}
+	user = user.EditUser(options...)
 
 	return user, nil
 }
 
-func (u *User) EditUser(options ...UserOpt) (*User, error) {
+func (u *User) EditUser(options ...UserOpt) *User {
 	if len(options) == 0 {
-		return u, errors.New("there is no options to operate")
+		return u
 	}
 	for _, opt := range options {
 		opt(u)
 	}
 
-	return u, nil
+	return u
 }
 
 func WithUserName(userName string) UserOpt {
@@ -70,5 +72,11 @@ func WithLastName(last string) UserOpt {
 func WithPhoneNumber(phone string) UserOpt {
 	return func(u *User) {
 		u.MobileNumber = phone
+	}
+}
+
+func WithLoginMethod(methods []LoginMethod) UserOpt {
+	return func(u *User) {
+		u.LoginMethod = methods
 	}
 }

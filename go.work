@@ -8,6 +8,7 @@ use (
 	./domain/chat
 	./domain/user
 	./internal/application/auth
+	./internal/infrastructure/cassandra
 	./internal/presentation/gin_handlers
 	./pkg/claims
 	./pkg/logger/adapter

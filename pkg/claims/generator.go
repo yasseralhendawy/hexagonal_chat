@@ -21,7 +21,7 @@ func NewTokenGenerator(cfg *config.JWT) *TokenGenerator {
 func (t *TokenGenerator) CreateToken(data *ClaimsData) (string, error) {
 	claims := t.newClaims(data)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(t.cfg.Secret)
+	return token.SignedString([]byte(t.cfg.Secret))
 }
 
 func (t *TokenGenerator) ValidateToken(tokenString string) (*ClaimsData, error) {

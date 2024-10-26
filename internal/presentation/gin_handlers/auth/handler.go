@@ -10,12 +10,7 @@ import (
 
 type AuthHandler struct {
 	Server *ginserver.GinServer
-	App    IAuthApp
-}
-
-type IAuthApp interface {
-	Login(*authapp.LoginRequest) (interface{}, error)
-	Register(*authapp.RegisterRequest) (interface{}, error)
+	App    *authapp.App
 }
 
 func (h AuthHandler) Run(addr ...string) {
@@ -46,7 +41,7 @@ func (h AuthHandler) Login() {
 }
 
 func (h AuthHandler) Register() {
-	h.Server.Engin.GET("register", func(ctx *gin.Context) {
+	h.Server.Engin.POST("register", func(ctx *gin.Context) {
 		req := new(authapp.RegisterRequest)
 
 		err := ctx.ShouldBindJSON(&req)
@@ -57,7 +52,7 @@ func (h AuthHandler) Register() {
 
 		res, err := h.App.Register(req)
 		if err != nil {
-			ctx.AbortWithError(http.StatusInternalServerError, err)
+			ctx.JSON(http.StatusConflict, err.Error())
 			return
 		}
 

@@ -3,11 +3,11 @@ cassandra:
   password: admin
   keySpace: user
   hosts:
-    -  http://cassandra-seed:9042
-    -  http://cassandra-nood1:9142
-    -  http://cassandra-nood2:9242
+    - cassandra-seed
+    # -  cassandra-nood1
+    # -  cassandra-nood2
 jwt:
-  secret: secret
+  secret: secret_lol
   issuer: hex_chat
   Audience:
     - web

@@ -6,6 +6,7 @@ const (
 	General    LoggerFrom = "general"
 	AppMetrics LoggerFrom = "app-metrics"
 	GinServer  LoggerFrom = "gin-server"
+	CStorage   LoggerFrom = "cassandra-storage"
 )
 
 type Logger interface {

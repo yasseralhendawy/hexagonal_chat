@@ -10,38 +10,46 @@ import (
 )
 
 type GinServer struct {
-	Engin  *gin.Engine
-	logger logger.Logger
+	Engin *gin.Engine
 }
 
-func InitServer(lg logger.Logger, m appmetrics.Metrics) *GinServer {
-	gin.SetMode(gin.ReleaseMode)
-	r := gin.New()
-	r.Use(handleLogger(lg))
-	r.Use(handleMetrics(m))
-	return &GinServer{
-		Engin:  r,
-		logger: lg,
-	}
+type GinOpt func(*GinServer)
 
+func InitServer(opts ...GinOpt) *GinServer {
+	gin.SetMode(gin.ReleaseMode)
+	api := &GinServer{
+		Engin: gin.New(),
+	}
+	for _, opt := range opts {
+		opt(api)
+	}
+	return api
+}
+
+func Logger(lg logger.Logger) GinOpt {
+	return func(s *GinServer) {
+		s.Engin.Use(handleLogger(lg))
+	}
+}
+
+func Metric(metric appmetrics.Metrics) GinOpt {
+	return func(s *GinServer) {
+		s.Engin.Use(handleMetrics(metric))
+	}
 }
 
 // func (api *ginFramework) addGroup(add string) *gin.RouterGroup {
 // 	return api.engin.Group(add)
 // }
 
-func (api *GinServer) Run(addr ...string) {
-	api.logger.Info(logger.GinServer, "Server Started", nil)
-	err := api.Engin.Run(addr...)
-	if err != nil {
-		api.logger.Fatal(logger.GinServer, "can not start", nil)
-	}
+func (api *GinServer) Run(addr ...string) error {
+	return api.Engin.Run(addr...)
 }
 
 func handleLogger(l logger.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
-		// some evil middlewares modify this values
+
 		path := c.Request.URL.Path
 		query := c.Request.URL.RawQuery
 
