@@ -1,15 +1,14 @@
-package ginhs
+package ginserver
 
 import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	authapp "github.com/yasseralhendawy/hexagonal_chat/internal/application/auth"
-	ginserver "github.com/yasseralhendawy/hexagonal_chat/pkg/servers/gin_server"
 )
 
 type AuthHandler struct {
-	Server *ginserver.GinServer
+	Server *GinServer
 	App    *authapp.App
 }
 

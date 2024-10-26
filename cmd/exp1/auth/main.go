@@ -5,12 +5,11 @@ import (
 	"github.com/yasseralhendawy/hexagonal_chat/domain/auth"
 	authapp "github.com/yasseralhendawy/hexagonal_chat/internal/application/auth"
 	cstorage "github.com/yasseralhendawy/hexagonal_chat/internal/infrastructure/cassandra"
-	ginhs "github.com/yasseralhendawy/hexagonal_chat/internal/presentation/gin_handlers/auth"
+	ginserver "github.com/yasseralhendawy/hexagonal_chat/internal/presentation/gin_server"
 	"github.com/yasseralhendawy/hexagonal_chat/pkg/claims"
 	"github.com/yasseralhendawy/hexagonal_chat/pkg/logger/logger"
 	zaplogger "github.com/yasseralhendawy/hexagonal_chat/pkg/logger/zap_logger"
 	prometrics "github.com/yasseralhendawy/hexagonal_chat/pkg/metrics/prometheus"
-	ginserver "github.com/yasseralhendawy/hexagonal_chat/pkg/servers/gin_server"
 )
 
 func main() {
@@ -43,7 +42,7 @@ func main() {
 	}
 	defer db.StopSession()
 	// let's rap all things togeher
-	handler := ginhs.AuthHandler{
+	handler := ginserver.AuthHandler{
 		Server: ginserver.InitServer(ginserver.Logger(lg), ginserver.Metric(metric)),
 		App: &authapp.App{
 			Tokenization:  claims.NewTokenGenerator(&cfg.Jwt),

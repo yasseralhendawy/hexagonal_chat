@@ -9,11 +9,10 @@ use (
 	./domain/user
 	./internal/application/auth
 	./internal/infrastructure/cassandra
-	./internal/presentation/gin_handlers
+	./internal/presentation/gin_server
 	./pkg/claims
 	./pkg/logger/adapter
 	./pkg/logger/zap_logger
 	./pkg/metrics/adapter
 	./pkg/metrics/prometheus
-	./pkg/servers/gin_server
 )
