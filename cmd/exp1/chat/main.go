@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/yasseralhendawy/hexagonal_chat/config"
-	"github.com/yasseralhendawy/hexagonal_chat/pkg/logger/logger"
+	logger "github.com/yasseralhendawy/hexagonal_chat/pkg/logger/adapter"
 	zaplogger "github.com/yasseralhendawy/hexagonal_chat/pkg/logger/zap_logger"
 )
 

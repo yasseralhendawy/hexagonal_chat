@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/yasseralhendawy/hexagonal_chat/pkg/logger/logger"
+	logger "github.com/yasseralhendawy/hexagonal_chat/pkg/logger/adapter"
 	appmetrics "github.com/yasseralhendawy/hexagonal_chat/pkg/metrics/adapter"
 )
 

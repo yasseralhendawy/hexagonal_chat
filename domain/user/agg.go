@@ -28,7 +28,7 @@ func NewChat(participants []*Person) (*UserChat, error) {
 
 func (c *UserChat) EditChat(opts ...ChatOpt) (*UserChat, error) {
 	if len(opts) == 0 {
-		return c, errors.New("there is no options to operate")
+		return nil, errors.New("there is no options to operate")
 	}
 	for _, opt := range opts {
 		err := opt(c)

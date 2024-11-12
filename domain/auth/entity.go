@@ -8,7 +8,7 @@ import (
 type LoginMethod string
 
 const (
-	Email = "email"
+	Email LoginMethod = "email"
 )
 
 type User struct {

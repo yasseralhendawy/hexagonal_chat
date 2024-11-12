@@ -36,14 +36,14 @@ func (s *ChatService) AddMesage(chatID string, senderID string, text string) (*C
 }
 
 func (s *ChatService) EditMessageText(userID string, chatID string, messageID string, text string) (*Chat, error) {
-	return s.editMessage(userID, chatID, messageID, EditText(text))
+	return s.EditChatMessage(userID, chatID, messageID, EditText(text))
 }
 
 func (s *ChatService) DeleteMessage(userID string, chatID string, messageID string) (*Chat, error) {
-	return s.editMessage(userID, chatID, messageID, MarkMessageAsDeleted())
+	return s.EditChatMessage(userID, chatID, messageID, MarkMessageAsDeleted())
 }
 
-func (s *ChatService) editMessage(userID string, chatID string, messageID string, opt MessageOpt) (*Chat, error) {
+func (s *ChatService) EditChatMessage(userID string, chatID string, messageID string, opt MessageOpt) (*Chat, error) {
 	c, err := s.GetChat(chatID)
 	if err != nil {
 		return nil, err

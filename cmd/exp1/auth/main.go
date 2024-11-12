@@ -7,7 +7,7 @@ import (
 	cstorage "github.com/yasseralhendawy/hexagonal_chat/internal/infrastructure/cassandra"
 	ginserver "github.com/yasseralhendawy/hexagonal_chat/internal/presentation/gin_server"
 	"github.com/yasseralhendawy/hexagonal_chat/pkg/claims"
-	"github.com/yasseralhendawy/hexagonal_chat/pkg/logger/logger"
+	logger "github.com/yasseralhendawy/hexagonal_chat/pkg/logger/adapter"
 	zaplogger "github.com/yasseralhendawy/hexagonal_chat/pkg/logger/zap_logger"
 	prometrics "github.com/yasseralhendawy/hexagonal_chat/pkg/metrics/prometheus"
 )

@@ -2,15 +2,14 @@ package user
 
 import (
 	"errors"
-
-	"golang.org/x/sync/errgroup"
 )
 
 type IUserRepo interface {
 	CreateNewChat(*UserChat) error
 	GetUserChat(string) (*UserChat, error)
 	SaveUserChat(*UserChat) error
-	GetPerson(string) (*Person, error)
+	// GetPerson(string) (*Person, error)
+	CheckParticipants(participants []string) ([]*Person, error)
 	GetUserHistory(string) ([]*UserChat, error)
 }
 
@@ -19,8 +18,11 @@ type Service struct {
 }
 
 func (s *Service) CreatNewChat(participants []string, senderID string, text string) (*UserChat, error) {
+	if len(participants) < 1 {
+		return nil, errors.New("any chat should have at least one participants")
+	}
 	//lets add a rule that all participants should be exist
-	persons, err := s.checkParticipants(participants)
+	persons, err := s.Storage.CheckParticipants(participants)
 	if err != nil {
 		return nil, err
 	}
@@ -41,19 +43,19 @@ func (s *Service) GetUserHistory(userID string) ([]*UserChat, error) {
 
 // func to leave chat
 func (s *Service) LeaveChat(userID string, chatID string) error {
-	_, err := s.editChat(chatID, RemoveParticipant(userID))
+	_, err := s.EditChat(chatID, RemoveParticipant(userID))
 	return err
 }
 
 func (s *Service) AddParticipants(chatID string, participants []string) (*UserChat, error) {
-	persons, err := s.checkParticipants(participants)
+	persons, err := s.Storage.CheckParticipants(participants)
 	if err != nil {
 		return nil, err
 	}
-	return s.editChat(chatID, AddParticipants(persons))
+	return s.EditChat(chatID, AddParticipants(persons))
 }
 
-func (s *Service) editChat(chatID string, opt ...ChatOpt) (*UserChat, error) {
+func (s *Service) EditChat(chatID string, opt ...ChatOpt) (*UserChat, error) {
 	if len(opt) == 0 {
 		return nil, errors.New("there is no options to operate")
 	}
@@ -72,29 +74,29 @@ func (s *Service) editChat(chatID string, opt ...ChatOpt) (*UserChat, error) {
 	return c, nil
 }
 
-func (s *Service) checkParticipants(participants []string) ([]*Person, error) {
-	var g errgroup.Group
-	ch := make(chan *Person, len(participants))
+// func (s *Service) checkParticipants(participants []string) ([]*Person, error) {
+// 	var g errgroup.Group
+// 	ch := make(chan *Person, len(participants))
 
-	persons := make([]*Person, len(participants))
-	for _, v := range participants {
-		g.Go(func() error {
-			p, err := s.Storage.GetPerson(v)
-			if err != nil {
-				return err
-			}
-			ch <- p
-			return nil
-		})
-	}
-	err := g.Wait()
-	close(ch)
+// 	persons := make([]*Person, len(participants))
+// 	for _, v := range participants {
+// 		g.Go(func() error {
+// 			p, err := s.Storage.GetPerson(v)
+// 			if err != nil {
+// 				return err
+// 			}
+// 			ch <- p
+// 			return nil
+// 		})
+// 	}
+// 	err := g.Wait()
+// 	close(ch)
 
-	if err != nil {
-		return nil, err
-	}
-	for v := range ch {
-		persons = append(persons, v)
-	}
-	return persons, nil
-}
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	for v := range ch {
+// 		persons = append(persons, v)
+// 	}
+// 	return persons, nil
+// }

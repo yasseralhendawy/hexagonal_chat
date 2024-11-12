@@ -284,20 +284,20 @@ func (a AuthRepo) getCredentialByEmail(email string) (*user_by_email, error) {
 	ctx := context.Background()
 	err := a.instance.session.Query(`SELECT id,email,pass FROM `+a.instance.cfg.Keyspace+`.user_by_email WHERE email = ? LIMIT 1`, email).WithContext(ctx).Scan(&user.ID, &user.Email, &user.Password)
 	if err != nil {
-		a.metric.DBCallsWithLabelValues(reflect.TypeOf(user).String(), "Update", "Fail")
+		a.metric.DBCallsWithLabelValues(reflect.TypeOf(user).String(), "Select", "Fail")
 		return nil, err
 	}
-	a.metric.DBCallsWithLabelValues(reflect.TypeOf(user).String(), "Update", "Success")
+	a.metric.DBCallsWithLabelValues(reflect.TypeOf(user).String(), "Select", "Success")
 	return user, nil
 }
 
 func (a AuthRepo) getPersonalData(id string) (*person_cql, error) {
 	user, err := getPersonalData(a.instance, id)
 	if err != nil {
-		a.metric.DBCallsWithLabelValues(reflect.TypeOf(user).String(), "Update", "Fail")
+		a.metric.DBCallsWithLabelValues(reflect.TypeOf(user).String(), "Select", "Fail")
 		return nil, err
 	}
-	a.metric.DBCallsWithLabelValues(reflect.TypeOf(user).String(), "Update", "Success")
+	a.metric.DBCallsWithLabelValues(reflect.TypeOf(user).String(), "Select", "Success")
 	return user, nil
 }
 

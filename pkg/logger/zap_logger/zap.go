@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/yasseralhendawy/hexagonal_chat/config"
-	"github.com/yasseralhendawy/hexagonal_chat/pkg/logger/logger"
+	logger "github.com/yasseralhendawy/hexagonal_chat/pkg/logger/adapter"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"

@@ -3,8 +3,6 @@ package chat
 import (
 	"errors"
 	"time"
-
-	"github.com/google/uuid"
 )
 
 type Chat struct {
@@ -16,19 +14,18 @@ type Chat struct {
 
 type ChatOpt func(*Chat) error
 
-func NewChat(participants []string) (*Chat, error) {
-	if len(participants) < 2 {
-		return nil, errors.New("any chat should have at least two participants")
+func (c *Chat) GetMessage(messageID string) (*Message, error) {
+	for _, m := range c.Messages {
+		if m.MessageID == messageID {
+			return m, nil
+		}
 	}
-	return &Chat{
-		ChatID:          uuid.New().String(),
-		ParticipantsIDs: participants,
-	}, nil
+	return nil, errors.New("message could not be found")
 }
 
 func (c *Chat) EditChat(options ...ChatOpt) (*Chat, error) {
 	if len(options) == 0 {
-		return c, errors.New("there is no options to operate")
+		return nil, errors.New("there is no options to operate")
 	}
 	for _, opt := range options {
 		err := opt(c)

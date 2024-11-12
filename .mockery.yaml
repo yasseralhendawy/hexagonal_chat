@@ -1,0 +1,24 @@
+# Because we using multi modules in this project we are going to take the aproach of adjacent to interface 
+# for more info you can check out mockery documentation https://vektra.github.io/mockery/latest/configuration/#layouts
+disable-version-string: True
+with-expecter: True
+filename: "mock_{{.InterfaceName}}.go"
+dir: "{{.InterfaceDir}}"
+mockname: "Mock{{.InterfaceName}}"
+inpackage: True
+packages:
+  github.com/yasseralhendawy/hexagonal_chat/domain/auth:
+    interfaces:
+      IAuthRepo:
+  github.com/yasseralhendawy/hexagonal_chat/domain/chat:
+    interfaces:
+      IChatRepo:
+  github.com/yasseralhendawy/hexagonal_chat/domain/user:
+    interfaces:
+      IUserRepo:
+  github.com/yasseralhendawy/hexagonal_chat/pkg/logger/adapter:
+    interfaces:
+      Logger:
+  github.com/yasseralhendawy/hexagonal_chat/pkg/metrics/adapter:
+    interfaces:
+      Metrics:
