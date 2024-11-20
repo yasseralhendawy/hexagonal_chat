@@ -1,0 +1,4 @@
+cmd/**/logs/
+cmd/**/tmp/
+cmd/**/.air.toml
+docker/dev/

@@ -1,0 +1,16 @@
+# FROM mcr.microsoft.com/devcontainers/go:1-1.22-bookworm
+
+FROM golang:alpine
+
+# WORKDIR /app
+RUN go golang.org/x/tools/gopls@latest
+RUN go honnef.co/go/tools/cmd/staticcheck@latest
+RUN apk add --no-cache git build-base
+
+# RUN curl -sSfL https://raw.githubusercontent.com/air-verse/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+RUN go install github.com/air-verse/air@latest
+
+# COPY go.mod go.sum ./
+# RUN go mod download
+
+CMD ["go", "version","air", "-c", ".air.toml"]
