@@ -25,12 +25,12 @@ func NewCassandraSession(cfg config.CassandraDB) (*CassandraDB, error) {
 	if err != nil {
 		return nil, err
 	}
-	session.Close()
+	// session.Close()
 	cluster.Keyspace = cfg.KeySpace
-	session, err = cluster.CreateSession()
-	if err != nil {
-		return nil, err
-	}
+	// session, err = cluster.CreateSession()
+	// if err != nil {
+	// 	return nil, err
+	// }
 	return &CassandraDB{cfg: cluster, session: session}, nil
 }
 

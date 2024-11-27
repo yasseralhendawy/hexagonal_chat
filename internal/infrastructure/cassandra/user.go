@@ -2,6 +2,7 @@ package cstorage
 
 import (
 	"context"
+	"errors"
 	"reflect"
 	"sync"
 
@@ -28,7 +29,7 @@ func (s *CassandraDB) NewAuthRepo(metric appmetrics.Metrics) (auth.IAuthRepo, er
 	}()
 	go func() {
 		defer wg.Done()
-		err := s.session.Query("CREATE TABLE IF NOT EXISTS " + s.cfg.Keyspace + ".person_cql (id text,username text,firstname text,lastname text,PRIMARY KEY(id,username));").Exec()
+		err := s.session.Query("CREATE TABLE IF NOT EXISTS " + s.cfg.Keyspace + ".person_cql (id text,username text,firstname text,lastname text,PRIMARY KEY (id));").Exec()
 		if err != nil {
 			errCh <- err
 			return
@@ -36,7 +37,7 @@ func (s *CassandraDB) NewAuthRepo(metric appmetrics.Metrics) (auth.IAuthRepo, er
 	}()
 	go func() {
 		defer wg.Done()
-		err := s.session.Query("CREATE TABLE IF NOT EXISTS " + s.cfg.Keyspace + ".user_data (id text,email text,phone text,username text,PRIMARY KEY(id,username));").Exec()
+		err := s.session.Query("CREATE TABLE IF NOT EXISTS " + s.cfg.Keyspace + ".user_data (id text,email text,phone text,username text,PRIMARY KEY (id));").Exec()
 		if err != nil {
 			errCh <- err
 			return
@@ -53,6 +54,43 @@ func (s *CassandraDB) NewAuthRepo(metric appmetrics.Metrics) (auth.IAuthRepo, er
 		metric:   metric,
 		instance: s,
 	}, nil
+}
+
+// this function made only for testing purposes and
+// because the domain will read the interface and it's not descriped in IAuthRepo it's fine to be here
+func (a AuthRepo) DropTables() error {
+	var wg sync.WaitGroup
+	wg.Add(3)
+	errCh := make(chan error, 3)
+	go func() {
+		defer wg.Done()
+		err := a.instance.session.Query("DROP TABLE " + a.instance.cfg.Keyspace + ".user_by_email").Exec()
+		if err != nil {
+			errCh <- err
+		}
+	}()
+	go func() {
+		defer wg.Done()
+		err := a.instance.session.Query("DROP TABLE " + a.instance.cfg.Keyspace + ".person_cql").Exec()
+		if err != nil {
+			errCh <- err
+		}
+	}()
+	go func() {
+		defer wg.Done()
+		err := a.instance.session.Query("DROP TABLE " + a.instance.cfg.Keyspace + ".user_data").Exec()
+		if err != nil {
+			errCh <- err
+		}
+	}()
+	wg.Wait()
+	close(errCh)
+	for err := range errCh {
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 type user_tables struct {
@@ -172,6 +210,16 @@ func (a AuthRepo) CreateNewUser(user *auth.User) error {
 
 // EditUser implements auth.IAuthRepo.
 func (a AuthRepo) EditUser(user *auth.User) error {
+	if user == nil {
+		return errors.New("user can not be nil")
+	}
+	userFound, err := a.CheckUserEmailExist(user.Email)
+	if err != nil {
+		return err
+	}
+	if !userFound {
+		return errors.New("user can not be found")
+	}
 	var wg sync.WaitGroup
 	wg.Add(3)
 	errCh := make(chan error, 3)
@@ -203,7 +251,7 @@ func (a AuthRepo) EditUser(user *auth.User) error {
 	go func() {
 		defer wg.Done()
 		ctx := context.Background()
-		err := a.instance.session.Query(`UPDATE `+a.instance.cfg.Keyspace+`.user_by_email SET pass=? WHERE id=?`, user.HashPassword, user.UserId).WithContext(ctx).Exec()
+		err := a.instance.session.Query(`UPDATE `+a.instance.cfg.Keyspace+`.user_by_email SET pass=? WHERE email=? AND id=?`, user.HashPassword, user.Email, user.UserId).WithContext(ctx).Exec()
 		if err != nil {
 			a.metric.DBCallsWithLabelValues(reflect.TypeOf(user_by_email{}).String(), "Update", "Fail")
 			errCh <- err
