@@ -14,7 +14,7 @@ import (
 type _AuthRTestSuit struct {
 	suite.Suite
 	session *cstorage.CassandraDB
-	repo    cstorage.AuthRepo
+	repo    *cstorage.AuthRepo
 }
 
 func (uts *_AuthRTestSuit) SetupSuite() {
@@ -23,9 +23,8 @@ func (uts *_AuthRTestSuit) SetupSuite() {
 	uts.Require().Nil(err)
 	mock_metric := &appmetrics.MockMetrics{}
 	mock_metric.EXPECT().DBCallsWithLabelValues(mock.Anything, mock.Anything, mock.Anything).Return()
-	repo, err := uts.session.NewAuthRepo(mock_metric)
+	uts.repo, err = uts.session.NewAuthRepo(mock_metric)
 	uts.Require().Nil(err)
-	uts.repo = repo.(cstorage.AuthRepo)
 }
 
 func (uts *_AuthRTestSuit) BeforeTest(suiteName, testName string) {

@@ -59,7 +59,7 @@ func (_c *MockMetrics_DBCallsWithLabelValues_Call) Return() *MockMetrics_DBCalls
 }
 
 func (_c *MockMetrics_DBCallsWithLabelValues_Call) RunAndReturn(run func(...string)) *MockMetrics_DBCallsWithLabelValues_Call {
-	_c.Call.Return(run)
+	_c.Run(run)
 	return _c
 }
 
@@ -107,7 +107,7 @@ func (_c *MockMetrics_LatencyWithLabelValues_Call) Return() *MockMetrics_Latency
 }
 
 func (_c *MockMetrics_LatencyWithLabelValues_Call) RunAndReturn(run func(float64, ...string)) *MockMetrics_LatencyWithLabelValues_Call {
-	_c.Call.Return(run)
+	_c.Run(run)
 	return _c
 }
 
