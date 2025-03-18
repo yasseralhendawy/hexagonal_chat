@@ -14,15 +14,19 @@ type AuthRepo struct {
 	metric   appmetrics.Metrics
 }
 
-func (s *CassandraDB) NewAuthRepo(metric appmetrics.Metrics) (auth.IAuthRepo, error) {
-	return AuthRepo{
+func (s *CassandraDB) NewAuthRepo(metric appmetrics.Metrics) (*AuthRepo, error) {
+	return &AuthRepo{
 		metric:   metric,
 		instance: s,
 	}, nil
 }
 
+// func (a *AuthRepo) IAuthRepo() auth.IAuthRepo {
+// 	return a
+// }
+
 // CreateNewUser implements auth.IAuthRepo.
-func (a AuthRepo) CreateNewUser(user *auth.User) error {
+func (a *AuthRepo) CreateNewUser(user *auth.User) error {
 	user_tables := NewUserTables(user)
 	n := len(user_tables.Credentials) + 2
 	if n <= 2 {
@@ -80,7 +84,7 @@ func (a AuthRepo) CreateNewUser(user *auth.User) error {
 }
 
 // EditUser implements auth.IAuthRepo.
-func (a AuthRepo) EditUser(user *auth.User) error {
+func (a *AuthRepo) EditUser(user *auth.User) error {
 	if user == nil {
 		return errors.New("user can not be nil")
 	}
@@ -142,7 +146,7 @@ func (a AuthRepo) EditUser(user *auth.User) error {
 }
 
 // GetUser implements auth.IAuthRepo.
-func (a AuthRepo) GetUserByEmail(email string) (*auth.User, error) {
+func (a *AuthRepo) GetUserByEmail(email string) (*auth.User, error) {
 	c, err := a.getCredentialByEmail(email)
 	if err != nil {
 		return nil, err
@@ -190,7 +194,7 @@ func (a AuthRepo) GetUserByEmail(email string) (*auth.User, error) {
 	user := dao.toEntity()
 	return user, nil
 }
-func (a AuthRepo) CheckUserEmailExist(email string) (bool, error) {
+func (a *AuthRepo) CheckUserEmailExist(email string) (bool, error) {
 	user := &user_by_email{Email: email}
 	found, err := user.check(a.instance)
 	var mValue string
@@ -203,7 +207,7 @@ func (a AuthRepo) CheckUserEmailExist(email string) (bool, error) {
 	return found, err
 }
 
-func (a AuthRepo) CheckUserExist(user *user_tables) (bool, error) {
+func (a *AuthRepo) CheckUserExist(user *user_tables) (bool, error) {
 	n := len(user.Credentials)
 	var wg sync.WaitGroup
 	wg.Add(n)
@@ -244,7 +248,7 @@ func (a AuthRepo) CheckUserExist(user *user_tables) (bool, error) {
 	return false, nil
 }
 
-func (a AuthRepo) getCredentialByEmail(email string) (*user_by_email, error) {
+func (a *AuthRepo) getCredentialByEmail(email string) (*user_by_email, error) {
 	user := &user_by_email{}
 	err := user.readOne(a.instance, email)
 	if err != nil {
@@ -255,7 +259,7 @@ func (a AuthRepo) getCredentialByEmail(email string) (*user_by_email, error) {
 	return user, nil
 }
 
-func (a AuthRepo) getPersonalData(id string) (*_Person_cql, error) {
+func (a *AuthRepo) getPersonalData(id string) (*_Person_cql, error) {
 	user := &_Person_cql{}
 	err := user.readOne(a.instance, id)
 	if err != nil {
@@ -266,7 +270,7 @@ func (a AuthRepo) getPersonalData(id string) (*_Person_cql, error) {
 	return user, nil
 }
 
-func (a AuthRepo) getUserData(id string) (*_User_data, error) {
+func (a *AuthRepo) getUserData(id string) (*_User_data, error) {
 	user := &_User_data{}
 	err := user.readOne(a.instance, id)
 	if err != nil {

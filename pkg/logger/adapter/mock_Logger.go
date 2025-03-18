@@ -48,7 +48,7 @@ func (_c *MockLogger_Debug_Call) Return() *MockLogger_Debug_Call {
 }
 
 func (_c *MockLogger_Debug_Call) RunAndReturn(run func(LoggerFrom, string, map[string]interface{})) *MockLogger_Debug_Call {
-	_c.Call.Return(run)
+	_c.Run(run)
 	return _c
 }
 
@@ -83,7 +83,7 @@ func (_c *MockLogger_Error_Call) Return() *MockLogger_Error_Call {
 }
 
 func (_c *MockLogger_Error_Call) RunAndReturn(run func(LoggerFrom, string, map[string]interface{})) *MockLogger_Error_Call {
-	_c.Call.Return(run)
+	_c.Run(run)
 	return _c
 }
 
@@ -118,7 +118,7 @@ func (_c *MockLogger_Fatal_Call) Return() *MockLogger_Fatal_Call {
 }
 
 func (_c *MockLogger_Fatal_Call) RunAndReturn(run func(LoggerFrom, string, map[string]interface{})) *MockLogger_Fatal_Call {
-	_c.Call.Return(run)
+	_c.Run(run)
 	return _c
 }
 
@@ -153,7 +153,7 @@ func (_c *MockLogger_Info_Call) Return() *MockLogger_Info_Call {
 }
 
 func (_c *MockLogger_Info_Call) RunAndReturn(run func(LoggerFrom, string, map[string]interface{})) *MockLogger_Info_Call {
-	_c.Call.Return(run)
+	_c.Run(run)
 	return _c
 }
 
@@ -188,7 +188,7 @@ func (_c *MockLogger_Warn_Call) Return() *MockLogger_Warn_Call {
 }
 
 func (_c *MockLogger_Warn_Call) RunAndReturn(run func(LoggerFrom, string, map[string]interface{})) *MockLogger_Warn_Call {
-	_c.Call.Return(run)
+	_c.Run(run)
 	return _c
 }
 
