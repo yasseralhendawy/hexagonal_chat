@@ -2,6 +2,7 @@ package chat
 
 import (
 	"errors"
+	"slices"
 	"time"
 )
 
@@ -42,10 +43,9 @@ func AddMessage(message *Message) ChatOpt {
 		if c.ChatID != message.ChatID {
 			return errors.New("the chat id is diffent")
 		}
-		for _, v := range c.Messages {
-			if v.MessageID == message.MessageID {
-				return errors.New("this message is already exist")
-			}
+		found := slices.Contains(c.ParticipantsIDs, message.SenderID)
+		if !found {
+			return errors.New("user is not in the chat")
 		}
 		c.Messages = append(c.Messages, message)
 		c.LastMessage = message.TimeToPost

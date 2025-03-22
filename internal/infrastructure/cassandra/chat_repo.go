@@ -119,36 +119,14 @@ func (c *ChatRepo) GetChat(chatID string) (*chat.Chat, error) {
 
 // SaveMessage implements chat.IChatRepo.
 func (c *ChatRepo) SaveMessage(message *chat.Message) error {
+	_, err := get_Chat_row(c.instance, message.ChatID)
+	if err != nil {
+		return err
+	}
 	var wg sync.WaitGroup
+
 	wg.Add(2)
 	errCh := make(chan error, 2)
-	go func() { // lets make sure that the chat row exist
-		defer wg.Done()
-		_, err := get_Chat_row(c.instance, message.ChatID)
-		if err != nil {
-			errCh <- err
-		}
-	}()
-
-	go func() { //. double check that the chat is exist and the user is in the chat ,
-		// note this can be controversial in the team dissussion as u can depate about the responsibility of the domain which i agree about  because handling such from the repo is waste of resources
-		// but for now we will keep it in this way as a mistake from my imaginary college lol.
-		defer wg.Done()
-		_, err := get_ChatByUser(c.instance, message.ChatID, message.SenderID)
-		if err != nil {
-			errCh <- err
-		}
-	}()
-	wg.Wait()
-	close(errCh)
-	for err := range errCh {
-		if err != nil {
-			return err
-		}
-	}
-
-	wg.Add(2)
-	errCh = make(chan error, 2)
 	go func() {
 		defer wg.Done()
 		err := new_MessageByChat(message).create(c.instance)

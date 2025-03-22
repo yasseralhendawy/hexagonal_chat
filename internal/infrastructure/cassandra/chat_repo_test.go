@@ -103,8 +103,8 @@ func (uts *_ChatRepoSuit) BeforeTest(suiteName, testName string) {
 }
 
 func (uts *_ChatRepoSuit) TearDownSuite() {
-	// err := uts.session.DropTables()
-	// uts.Require().Nil(err)
+	err := uts.session.DropTables()
+	uts.Require().Nil(err)
 }
 
 func Test_ChatRepoTestSuit(t *testing.T) {
@@ -118,7 +118,7 @@ func (uts *_ChatRepoSuit) TestSaveMessage() {
 	}{
 		{
 			message:   chat.NewMessage("sender", "sm_chat", "some text"),
-			expectErr: true, // as there is no user with id "sender" in the chat
+			expectErr: false, // we assume the domain handled it before
 		},
 		{
 			message:   chat.NewMessage("sm_user", "chat_not_exist", "some text"),

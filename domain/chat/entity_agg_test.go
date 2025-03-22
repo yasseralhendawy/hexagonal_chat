@@ -89,6 +89,7 @@ func TestGetMessage(t *testing.T) {
 
 func TestEditChat(t *testing.T) {
 	var testCases = []struct {
+		testID      string
 		chat        chat.Chat
 		editOptions []chat.ChatOpt
 		expectError bool
@@ -100,11 +101,12 @@ func TestEditChat(t *testing.T) {
 		},
 		//edit messages test cases
 		{
-			chat: chatTemp,
+			testID: "test 1",
+			chat:   chatTemp,
 			editOptions: []chat.ChatOpt{
 				chat.EditMessage(&chat.Message{
 					MessageID:   "mid1",
-					SenderID:    "senderID",
+					SenderID:    "id1",
 					ChatID:      "chatID", //chat id is different
 					MessageText: "textmessage",
 				}),
@@ -112,7 +114,8 @@ func TestEditChat(t *testing.T) {
 			expectError: true,
 		},
 		{
-			chat: chatTemp,
+			testID: "test 2",
+			chat:   chatTemp,
 			editOptions: []chat.ChatOpt{
 				chat.EditMessage(&chat.Message{
 					MessageID:   "mid2",
@@ -124,11 +127,12 @@ func TestEditChat(t *testing.T) {
 			expectError: true,
 		},
 		{
-			chat: chatTemp,
+			testID: "test 3",
+			chat:   chatTemp,
 			editOptions: []chat.ChatOpt{
 				chat.EditMessage(&chat.Message{
 					MessageID:   "mid1",
-					SenderID:    "senderID",
+					SenderID:    "id1",
 					ChatID:      "id",
 					MessageText: "textmessage",
 				}),
@@ -137,11 +141,12 @@ func TestEditChat(t *testing.T) {
 		},
 		// add message test cases
 		{
-			chat: chatTemp,
+			testID: "test 4",
+			chat:   chatTemp,
 			editOptions: []chat.ChatOpt{
 				chat.AddMessage(&chat.Message{
 					MessageID:   "mid1",
-					SenderID:    "senderID",
+					SenderID:    "id1",
 					ChatID:      "chatID", // the chat id is different
 					MessageText: "textmessage",
 				}),
@@ -149,7 +154,8 @@ func TestEditChat(t *testing.T) {
 			expectError: true,
 		},
 		{
-			chat: chatTemp,
+			testID: "test 5",
+			chat:   chatTemp,
 			editOptions: []chat.ChatOpt{
 				chat.AddMessage(&chat.Message{
 					MessageID:   "mid2",
@@ -158,8 +164,8 @@ func TestEditChat(t *testing.T) {
 					MessageText: "textmessage",
 				}),
 				chat.AddMessage(&chat.Message{
-					MessageID:   "mid2", //this message is already exist
-					SenderID:    "senderID",
+					MessageID:   "mid2",
+					SenderID:    "senderID", // sender is not in the chat
 					ChatID:      "id",
 					MessageText: "textmessage",
 				}),
@@ -167,11 +173,12 @@ func TestEditChat(t *testing.T) {
 			expectError: true,
 		},
 		{
-			chat: chatTemp,
+			testID: "test 6 ",
+			chat:   chatTemp,
 			editOptions: []chat.ChatOpt{
 				chat.AddMessage(&chat.Message{
 					MessageID:   "mid2",
-					SenderID:    "senderID",
+					SenderID:    "id2",
 					ChatID:      "id",
 					MessageText: "textmessage",
 				}),
@@ -184,12 +191,12 @@ func TestEditChat(t *testing.T) {
 	for _, c := range testCases {
 		newchat, err := c.chat.EditChat(c.editOptions...)
 		if c.expectError {
-			assert.Error(err)
-			assert.Nil(newchat)
+			assert.Error(err, c.testID)
+			assert.Nil(newchat, c.testID)
 		} else {
-			assert.Nil(err)
-			assert.Equal(c.chat.ChatID, newchat.ChatID)
-			assert.NotEqual(c.chat, newchat)
+			assert.Nil(err, c.testID)
+			assert.Equal(c.chat.ChatID, newchat.ChatID, c.testID)
+			assert.NotEqual(c.chat, newchat, c.testID)
 		}
 	}
 }

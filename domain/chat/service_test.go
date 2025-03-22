@@ -55,11 +55,11 @@ func (mut *MockTestSuit) TestGetChat() {
 
 var chatTemp = chat.Chat{
 	ChatID:          "id",
-	ParticipantsIDs: []string{"id1,id2"},
+	ParticipantsIDs: []string{"id1", "id2"},
 	Messages: []*chat.Message{
 		{
 			MessageID:   "mid1",
-			SenderID:    "senderID",
+			SenderID:    "id1",
 			ChatID:      "id",
 			MessageText: "text",
 		},
