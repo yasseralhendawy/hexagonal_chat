@@ -5,6 +5,7 @@ go 1.22.1
 require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/yasseralhendawy/hexagonal_chat/internal/application/auth v0.0.0-20250318174738-9494a0fba1a1
+	github.com/yasseralhendawy/hexagonal_chat/pkg/claims v0.0.0-20250318174738-9494a0fba1a1
 	github.com/yasseralhendawy/hexagonal_chat/pkg/logger/adapter v0.0.0-20250318174738-9494a0fba1a1
 	github.com/yasseralhendawy/hexagonal_chat/pkg/metrics/adapter v0.0.0-20250318174738-9494a0fba1a1
 )
@@ -49,7 +50,6 @@ require (
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	github.com/yasseralhendawy/hexagonal_chat/config v0.0.0-20250318174738-9494a0fba1a1 // indirect
 	github.com/yasseralhendawy/hexagonal_chat/domain/auth v0.0.0-20250318174738-9494a0fba1a1 // indirect
-	github.com/yasseralhendawy/hexagonal_chat/pkg/claims v0.0.0-20250318174738-9494a0fba1a1 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/arch v0.8.0 // indirect
 	golang.org/x/crypto v0.31.0 // indirect

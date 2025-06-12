@@ -11,6 +11,7 @@ type IUserRepo interface {
 	// GetPerson(string) (*Person, error)
 	CheckParticipants(participants []string) ([]*Person, error)
 	GetUserHistory(string) ([]*UserChat, error)
+	GetUserChatsIDS(string) ([]string, error)
 }
 
 type Service struct {

@@ -7,6 +7,7 @@ const (
 	AppMetrics LoggerFrom = "app-metrics"
 	GinServer  LoggerFrom = "gin-server"
 	CStorage   LoggerFrom = "cassandra-storage"
+	WSocket    LoggerFrom = "websocket"
 )
 
 type Logger interface {

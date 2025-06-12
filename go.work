@@ -1,4 +1,4 @@
-go 1.22.1
+go 1.24.1
 
 use (
 	./cmd/exp1/auth
@@ -8,6 +8,8 @@ use (
 	./domain/chat
 	./domain/user
 	./internal/application/auth
+	./internal/application/chat_message
+	./internal/application/user_chat
 	./internal/infrastructure/cassandra
 	./internal/presentation/gin_server
 	./pkg/claims
@@ -15,4 +17,5 @@ use (
 	./pkg/logger/zap_logger
 	./pkg/metrics/adapter
 	./pkg/metrics/prometheus
+	./pkg/websocket/gorilla_socket
 )

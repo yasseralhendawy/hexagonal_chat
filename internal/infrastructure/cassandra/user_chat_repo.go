@@ -194,6 +194,17 @@ func (u *UserChatRepo) SaveUserChat(domain *user.UserChat) error {
 	}
 	return nil
 }
+func (u *UserChatRepo) GetUserChatsIDS(userID string) ([]string, error) {
+	list, err := get_ListOfChatByUser(u.instance, userID)
+	if err != nil {
+		return nil, err
+	}
+	var ids []string
+	for _, chat := range *list {
+		ids = append(ids, chat.chatID)
+	}
+	return ids, nil
+}
 
 func (s *CassandraDB) NewUserChatRepo(metric appmetrics.Metrics) (*UserChatRepo, error) {
 	return &UserChatRepo{

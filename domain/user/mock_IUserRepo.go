@@ -179,6 +179,64 @@ func (_c *MockIUserRepo_GetUserChat_Call) RunAndReturn(run func(string) (*UserCh
 	return _c
 }
 
+// GetUserChatsIDS provides a mock function with given fields: _a0
+func (_m *MockIUserRepo) GetUserChatsIDS(_a0 string) ([]string, error) {
+	ret := _m.Called(_a0)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetUserChatsIDS")
+	}
+
+	var r0 []string
+	var r1 error
+	if rf, ok := ret.Get(0).(func(string) ([]string, error)); ok {
+		return rf(_a0)
+	}
+	if rf, ok := ret.Get(0).(func(string) []string); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]string)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(string) error); ok {
+		r1 = rf(_a0)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockIUserRepo_GetUserChatsIDS_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetUserChatsIDS'
+type MockIUserRepo_GetUserChatsIDS_Call struct {
+	*mock.Call
+}
+
+// GetUserChatsIDS is a helper method to define mock.On call
+//   - _a0 string
+func (_e *MockIUserRepo_Expecter) GetUserChatsIDS(_a0 interface{}) *MockIUserRepo_GetUserChatsIDS_Call {
+	return &MockIUserRepo_GetUserChatsIDS_Call{Call: _e.mock.On("GetUserChatsIDS", _a0)}
+}
+
+func (_c *MockIUserRepo_GetUserChatsIDS_Call) Run(run func(_a0 string)) *MockIUserRepo_GetUserChatsIDS_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(string))
+	})
+	return _c
+}
+
+func (_c *MockIUserRepo_GetUserChatsIDS_Call) Return(_a0 []string, _a1 error) *MockIUserRepo_GetUserChatsIDS_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockIUserRepo_GetUserChatsIDS_Call) RunAndReturn(run func(string) ([]string, error)) *MockIUserRepo_GetUserChatsIDS_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // GetUserHistory provides a mock function with given fields: _a0
 func (_m *MockIUserRepo) GetUserHistory(_a0 string) ([]*UserChat, error) {
 	ret := _m.Called(_a0)

@@ -1,6 +1,7 @@
 package chat
 
 import (
+	"encoding/json"
 	"errors"
 	"time"
 
@@ -49,4 +50,8 @@ func EditText(text string) MessageOpt {
 	return func(m *Message) {
 		m.MessageText = text
 	}
+}
+
+func (m *Message) Marshal() ([]byte, error) {
+	return json.Marshal(*m)
 }

@@ -10,7 +10,7 @@ type App struct {
 	Tokenization  *claims.TokenGenerator
 }
 
-func (app *App) Login(req *LoginRequest) (interface{}, error) {
+func (app *App) Login(req *LoginRequest) (any, error) {
 	u, err := app.DomainService.GetUser(req.Email, req.Password)
 	if err != nil {
 		return nil, err
@@ -22,7 +22,7 @@ func (app *App) Login(req *LoginRequest) (interface{}, error) {
 	return token, nil
 }
 
-func (app *App) Register(req *RegisterRequest) (interface{}, error) {
+func (app *App) Register(req *RegisterRequest) (any, error) {
 	u, err := app.DomainService.CreateNewUser(req.Email, req.Password)
 	if err != nil {
 		return nil, err

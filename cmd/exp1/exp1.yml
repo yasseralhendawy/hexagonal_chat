@@ -3,7 +3,7 @@ cassandra:
   password: admin
   keySpace: user
   hosts:
-    - cassandra-seed
+    - localhost
     # -  cassandra-nood1
     # -  cassandra-nood2
 jwt:
