@@ -2,7 +2,7 @@ module github.com/yasseralhendawy/hexagonal_chat/internal/application/chat_messa
 
 go 1.24.1
 
-require github.com/yasseralhendawy/hexagonal_chat/domain/chat v0.0.0-20250612160155-9cf6ad71b8b4
+require github.com/yasseralhendawy/hexagonal_chat/domain/chat v0.0.0-20250614162007-90d4b9f1a97b
 
 require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect

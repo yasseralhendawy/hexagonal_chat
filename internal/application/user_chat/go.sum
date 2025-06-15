@@ -14,8 +14,9 @@ github.com/rogpeppe/go-internal v1.10.0/go.mod h1:UQnix2H7Ngw/k4C5ijL5+65zddjncj
 github.com/stretchr/objx v0.5.2 h1:xuMeJ0Sdp5ZMRXx/aWO6RZxdr3beISkG5/G/aIRr3pY=
 github.com/stretchr/objx v0.5.2/go.mod h1:FRsXN1f5AsAjCGJKqEizvkpNtU+EGNCLh3NxZ/8L+MA=
 github.com/stretchr/testify v1.10.0 h1:Xv5erBjTwe/5IxqUQTdXv5kgmIvbHo3QQyRwhJsOfJA=
-github.com/yasseralhendawy/hexagonal_chat/domain/user v0.0.0-20250612160155-9cf6ad71b8b4 h1:32Gov7RgRnXt58oGR2X74sPyJUcY7w+M09zINRiF+Vg=
-github.com/yasseralhendawy/hexagonal_chat/domain/user v0.0.0-20250612160155-9cf6ad71b8b4/go.mod h1:LLsRH6j+I6Bs40KQ9HI+HN4qbpOPlBu34fXMA8OtFFg=
+github.com/stretchr/testify v1.10.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
+github.com/yasseralhendawy/hexagonal_chat/domain/user v0.0.0-20250614162007-90d4b9f1a97b h1:2aDjq+Wo3/z3rYFahgdDSYYRY9uRyVNEbizNRdxk/Ww=
+github.com/yasseralhendawy/hexagonal_chat/domain/user v0.0.0-20250614162007-90d4b9f1a97b/go.mod h1:Z1OH0WfFS8r4iLHnRIATadwfhuN3zMTn0MxQHZVAUPs=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c h1:Hei/4ADfdWqJk1ZMxUNpqntNwaWcugrBjAiHlqqRiVk=
 gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c/go.mod h1:JHkPIbrfpd72SG/EVd6muEfDQjcINNoR0C8j2r3qZ4Q=
